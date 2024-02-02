@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+    p1:
+        tty: true
+        image: us.gcr.io/gcpdrive-sjstest/sw230-p1:1
+        ports:
+            - "5000:5000"
+        volumes:
+            - ..:/work
+            - work_home:/root
+        security_opt:
+            - seccomp:unconfined
+        environment:
+            - PYTHONPATH=/work
+        command:
+            - bash
+
+volumes:
+    work_home:

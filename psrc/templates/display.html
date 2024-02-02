@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SWEN 230: Project 1, Flexible Array of Records Data Structure</title>
+  <meta charset="utf-8">
+  <link type="text/css" href="{{ url_for('static', filename='display.css') }}" rel="stylesheet"></link>
+  
+</head>
+<body>
+
+<form id="form1" method="POST">
+<ul class="form-style">
+    <li>
+        <label>Name <span class="required">*</span></label>
+        <input type="text" name="name" class="field-divided" placeholder="Name" />
+    </li>
+    <li>
+        <label>Birth Date <span class="required">*</span></label>
+        <input type="date" id="birthdate" name="birthdate"
+               value="2001-07-22"
+               min="1960-01-01" max="3000-01-01">
+    </li>
+    <li>
+        <label>GPA</label>
+        <input type="text" name="gpa" class="field-divided" placeholder="GPA" />
+    </li>
+    <li>
+        <input type="submit" value="Insert" />
+    </li>
+</ul>
+</form>
+
+{%if results %}
+
+<div id="table">
+    <div class="tr">
+        <form id="form2" method="POST">
+        <div class="th"> remove? </div>
+        <div class="th"><input type="submit" value="Name" name="sortName"></div>
+        <div class="th"><input type="submit" value="Birthday" name="sortBirthday"></div>
+        <div class="th"><input type="submit" value="GPA" name="sortGPA"></div>
+        </form>
+    </div>
+    <form id="form3" method="POST">
+    {% for i in range(len) %}
+    <div class="tr">
+        <div class="td"><input type="checkbox" name="remove-{{i}}" group="remove_group"></div>
+        <div class="td">{{results[i]['name'].decode()}}</div>
+        <div class="td">{{results[i]['month']}}/{{results[i]['day']}}/{{results[i]['year']}}</div>
+        <div class="td">{{"%4.2f" % results[i]['gpa']}}</div>
+    </div>
+    {% endfor %}
+    <div class="tr"><span><input type="submit" value="Remove"></span></div>
+    </form>
+</div>
+
+{% endif %}
+
+{%if err %}
+<span>Error: {{err}}</span>
+{% endif %}
+
+
+{%if msgs %}
+    <span>Messages</span><br/>
+    {%for msg in msgs%}
+        <span>Messages: {{msg}}</span><br/>
+    {% endfor%}
+{% endif %}
+
+<span>Request Values: {{request.form}}</span>
+
+</body>
+</html>
+
